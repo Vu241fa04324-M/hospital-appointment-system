@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hospital Appointment Booking</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div>
+            Emergency Help: 123-456-789
+        </div>
+
+        <div>
+            Location: Andhra Pradesh, Guntur
+            &nbsp;&nbsp;
+            Mon - Sat: 9.00 - 10.00
+        </div>
+    </div>
+
+
+    <!-- Navigation -->
+    <div class="navbar">
+        <a href="#">
+            HOSPITAL APPOINTMENT BOOKING
+        </a>
+    </div>
+
+
+    <!-- Page Header -->
+    <div class="header">
+
+        <h1>Book An Appointment</h1>
+
+        <div class="breadcrumb">
+            &gt; Appointment section
+        </div>
+
+    </div>
+
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <div class="form-box">
+
+            <!-- Appointment Form -->
+            <form id="appointmentForm">
+
+                <div class="form-grid">
+
+                    <!-- Patient Name -->
+                    <div>
+                        <label for="patientName">
+                            Patient Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="patientName"
+                            placeholder="Enter Patient Name"
+                            maxlength="20"
+                            required>
+                    </div>
+
+
+                    <!-- Patient Age -->
+                    <div>
+                        <label for="patientAge">
+                            Patient Age <span>*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="patientAge"
+                            placeholder="Age"
+                            min="1"
+                            max="100"
+                            required>
+                    </div>
+
+
+                    <!-- Hospital -->
+                    <div>
+                        <label for="hospitalSelect">
+                            Available Hospitals <span>*</span>
+                        </label>
+
+                        <select id="hospitalSelect" required>
+
+                            <option value="">
+                                Select Hospital
+                            </option>
+
+                            <option value="Lalitha Multi speciality Hospital">
+                                Lalitha Multi speciality Hospital (Kothapet)
+                            </option>
+
+                            <option value="Ramesh Hospital">
+                                Ramesh Hospital (Kannavari Thota)
+                            </option>
+
+                            <option value="Vikas Hospital">
+                                Vikas Hospital (Kannavari Thota)
+                            </option>
+
+                            <option value="Tulasi Hospital">
+                                Tulasi Hospital (Guntur Vari Thota)
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- Specialist -->
+                    <div>
+                        <label for="specialistSelect">
+                            Appointment of Specialist <span>*</span>
+                        </label>
+
+                        <select id="specialistSelect" required>
+
+                            <option value="">
+                                Select Doctor Type
+                            </option>
+
+                            <option value="General Physician">
+                                General Physician
+                            </option>
+
+                            <option value="Cardiologist">
+                                Cardiologist
+                            </option>
+
+                            <option value="Dentist">
+                                Dentist
+                            </option>
+
+                            <option value="Orthopedic">
+                                Orthopedic
+                            </option>
+
+                            <option value="Neurologist">
+                                Neurologist
+                            </option>
+
+                            <option value="Gastroenterologist">
+                                Gastroenterologist
+                            </option>
+
+                            <option value="Nephrologist">
+                                Nephrologist
+                            </option>
+
+                            <option value="Otolaryngologist">
+                                Otolaryngologist (ENT)
+                            </option>
+
+                            <option value="Urologist">
+                                Urologist
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- Appointment Date -->
+                    <div>
+                        <label for="appointmentDate">
+                            Appointment Date <span>*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="appointmentDate"
+                            required>
+                    </div>
+
+
+                    <!-- Appointment Time -->
+                    <div>
+                        <label for="timeSlotSelect">
+                            Appointment Time <span>*</span>
+                        </label>
+
+                        <select id="timeSlotSelect" required>
+
+                            <option value="">
+                                Select Time Slot
+                            </option>
+
+                            <option value="09:00 AM - 10:00 AM">
+                                09:00 AM - 10:00 AM
+                            </option>
+
+                            <option value="10:00 AM - 11:00 AM">
+                                10:00 AM - 11:00 AM
+                            </option>
+
+                            <option value="11:00 AM - 12:00 PM">
+                                11:00 AM - 12:00 PM
+                            </option>
+
+                            <option value="02:00 PM - 03:00 PM">
+                                02:00 PM - 03:00 PM
+                            </option>
+
+                            <option value="03:00 PM - 04:00 PM">
+                                03:00 PM - 04:00 PM
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- Mobile -->
+                    <div>
+                        <label for="mobileNumber">
+                            Mobile Number <span>*</span>
+                        </label>
+
+                        <div class="mobile-input-container">
+
+                            <span class="prefix">
+                                🇮🇳 +91
+                            </span>
+
+                            <input
+                                type="tel"
+                                id="mobileNumber"
+                                placeholder="Phone Number"
+                                pattern="^[6-9][0-9]{9}$"
+                                maxlength="10"
+                                title="Enter a valid 10-digit Indian mobile number"
+                                required>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="full">
+
+                        <label for="emailAddress">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="emailAddress"
+                            placeholder="Email Address">
+
+                    </div>
+
+                </div>
+
+
+                <!-- Submit -->
+                <button type="submit">
+                    Book Appointment
+                </button>
+
+            </form>
+
+
+            <!-- Payment Section -->
+            <div
+                id="payment-options"
+                class="payment-options"
+                style="display: none;">
+
+                <h3>
+                    Select Payment Method
+                </h3>
+
+
+                <div class="payment-grid">
+
+                    <!-- Card -->
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="card">
+
+                        <i class="fa-solid fa-credit-card"></i>
+
+                        <span>
+                            Pay through Card
+                        </span>
+
+                    </label>
+
+
+                    <!-- Net Banking -->
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="netbanking">
+
+                        <i class="fa-solid fa-building-columns"></i>
+
+                        <span>
+                            Netbanking
+                        </span>
+
+                    </label>
+
+
+                    <!-- Pay on Visit -->
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="pay-on-visit">
+
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+
+                        <span>
+                            Pay on Visit
+                        </span>
+
+                    </label>
+
+
+                    <!-- UPI -->
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="upi">
+
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+
+                        <span>
+                            Pay UPI
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- Card Options -->
+                <div
+                    id="card-options"
+                    style="display: none; margin-top: 20px;">
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="card-type"
+                            value="credit">
+
+                        <span>
+                            Credit Card
+                        </span>
+
+                    </label>
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="card-type"
+                            value="debit">
+
+                        <span>
+                            Debit Card
+                        </span>
+
+                    </label>
+
+
+                    <div
+                        id="card-details"
+                        style="display: none; margin-top: 20px;">
+
+                        <label for="card-number">
+                            Card Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="card-number"
+                            placeholder="Enter 12-digit Number"
+                            maxlength="12"
+                            pattern="[0-9]{12}">
+
+
+                        <label
+                            for="cvv"
+                            style="margin-top: 10px;">
+
+                            CVV
+
+                        </label>
+
+                        <input
+                            type="password"
+                            id="cvv"
+                            placeholder="CVV"
+                            maxlength="3"
+                            pattern="[0-9]{3}">
+
+                    </div>
+
+                </div>
+
+
+                <!-- Netbanking -->
+                <div
+                    id="netbanking-details"
+                    style="display: none; margin-top: 20px;">
+
+                    <label for="banking-id">
+                        Banking ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="banking-id"
+                        placeholder="Please enter Banking ID">
+
+                </div>
+
+
+                <!-- UPI -->
+                <div
+                    id="upi-details"
+                    style="display: none; margin-top: 20px;">
+
+                    <label for="upi-id">
+                        UPI ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="upi-id"
+                        placeholder="Please enter UPI ID">
+
+                </div>
+
+
+                <!-- Payment Buttons -->
+                <button
+                    id="back-btn"
+                    type="button"
+                    style="background: #ccc; color: #000; margin-right: 10px;">
+
+                    Back
+
+                </button>
+
+                <button
+                    id="proceed-btn"
+                    type="button">
+
+                    Proceed
+
+                </button>
+
+            </div>
+
+
+            <!-- Confirmation -->
+            <div
+                id="confirmation"
+                class="payment-options"
+                style="display: none;">
+
+                <h3>
+                    Appointment Fee
+                </h3>
+
+                <p>
+                    Amount: ₹300
+                </p>
+
+                <p style="font-size: 0.9em; color: #666;">
+                    Clicking continue will download the appointment invoice.
+                </p>
+
+
+                <button
+                    id="back-to-payment"
+                    type="button"
+                    style="background: #ccc; color: #000; margin-right: 10px;">
+
+                    Back
+
+                </button>
+
+                <button
+                    id="continue-btn"
+                    type="button">
+
+                    Continue & Download Invoice
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Our JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

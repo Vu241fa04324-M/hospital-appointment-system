@@ -1,0 +1,492 @@
+* {
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+}
+
+body {
+    margin: 0;
+    position: relative;
+    min-height: 100vh;
+    background: #f0f0f0;
+}
+
+/* Background Image */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: url("https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2000")
+        no-repeat center center fixed;
+
+    background-size: cover;
+
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+
+    z-index: -1;
+
+    transform: scale(1.1);
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.top-bar {
+    background: rgba(233, 244, 243, 0.95);
+
+    padding: 8px 40px;
+
+    font-size: 13px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #555;
+
+    position: relative;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================
+   NAVIGATION BAR
+========================= */
+
+.navbar {
+    background: linear-gradient(
+        90deg,
+        rgba(43, 183, 166, 0.95),
+        rgba(53, 195, 177, 0.95)
+    );
+
+    padding: 14px 40px;
+
+    display: flex;
+
+    gap: 30px;
+
+    position: relative;
+}
+
+.navbar a {
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    background: rgba(255, 255, 255, 0.75);
+
+    padding: 40px;
+
+    position: relative;
+
+    backdrop-filter: blur(10px);
+}
+
+.header h1 {
+    margin: 0;
+
+    font-size: 30px;
+
+    font-weight: 500;
+
+    color: #2c3e50;
+}
+
+.breadcrumb {
+    margin-top: 6px;
+
+    font-size: 14px;
+
+    color: #555;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    max-width: 1000px;
+
+    margin: 40px auto;
+
+    padding: 0 20px;
+
+    position: relative;
+}
+
+
+/* =========================
+   FORM BOX
+========================= */
+
+.form-box {
+    background: rgba(255, 255, 255, 0.96);
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================
+   FORM GRID
+========================= */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px 30px;
+}
+
+
+/* =========================
+   LABELS
+========================= */
+
+label {
+    font-size: 14px;
+
+    font-weight: 500;
+
+    margin-bottom: 6px;
+
+    display: block;
+
+    color: #444;
+}
+
+label span {
+    color: red;
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+select {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #ccd1d1;
+
+    border-radius: 4px;
+
+    font-size: 14px;
+
+    background: #fff;
+
+    transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+
+    border-color: #35c3b1;
+
+    box-shadow: 0 0 5px rgba(53, 195, 177, 0.3);
+}
+
+
+/* Full width field */
+
+.full {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+button {
+    margin-top: 20px;
+
+    padding: 12px 26px;
+
+    background: #35c3b1;
+
+    border: none;
+
+    color: #fff;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #2bb7a6;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:disabled {
+    background: #ccc;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   PAYMENT SECTION
+========================= */
+
+.payment-options {
+    margin-top: 30px;
+
+    padding: 20px;
+
+    background: linear-gradient(
+        135deg,
+        #f0f8f0,
+        #e8f5e8
+    );
+
+    border-radius: 6px;
+
+    border: 1px solid #c8e6c9;
+}
+
+.payment-options h3 {
+    margin: 0 0 20px 0;
+
+    font-size: 18px;
+
+    font-weight: 500;
+}
+
+
+/* Payment grid */
+
+.payment-grid {
+    display: grid;
+
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+    );
+
+    gap: 15px;
+}
+
+
+/* Payment option */
+
+.payment-option {
+    display: flex;
+
+    align-items: center;
+
+    padding: 15px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+    border-color: #35c3b1;
+
+    background: #f9ffff;
+}
+
+
+/* Payment icons */
+
+.payment-option i {
+    font-size: 20px;
+
+    margin-right: 12px;
+
+    color: #35c3b1;
+
+    width: 25px;
+
+    text-align: center;
+}
+
+
+/* Payment radio */
+
+.payment-option input[type="radio"] {
+    margin-right: 10px;
+
+    width: auto;
+}
+
+
+/* =========================
+   MOBILE NUMBER
+========================= */
+
+.mobile-input-container {
+    position: relative;
+}
+
+.mobile-input-container input {
+    padding-left: 70px;
+}
+
+.mobile-input-container .prefix {
+    position: absolute;
+
+    left: 10px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    background: #f0f0f0;
+
+    padding: 5px 8px;
+
+    border-radius: 4px;
+
+    font-size: 12px;
+
+    border: 1px solid #ddd;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   CARD DETAILS
+========================= */
+
+#card-details input,
+#netbanking-details input,
+#upi-details input {
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   CONFIRMATION
+========================= */
+
+#confirmation {
+    background: linear-gradient(
+        135deg,
+        #f0f8f0,
+        #e8f5e8
+    );
+}
+
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 768px) {
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .top-bar {
+        padding: 12px 20px;
+
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .navbar {
+        padding: 14px 20px;
+    }
+
+    .header {
+        padding: 30px 20px;
+    }
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+    .container {
+        margin: 25px auto;
+
+        padding: 0 15px;
+    }
+
+    .form-box {
+        padding: 20px;
+    }
+
+    .payment-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE SCREEN
+========================= */
+
+@media (max-width: 480px) {
+
+    .header h1 {
+        font-size: 22px;
+    }
+
+    .form-box {
+        padding: 15px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .top-bar {
+        font-size: 11px;
+    }
+}

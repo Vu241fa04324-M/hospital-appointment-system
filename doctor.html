@@ -1,0 +1,487 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Doctor Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #1976d2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .top-bar h2 {
+            margin-top: 0;
+        }
+
+        .refresh-btn {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .refresh-btn:hover {
+            background: #125ca3;
+        }
+
+        .appointment-card {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .appointment-header h3 {
+            margin: 0;
+            color: #1976d2;
+        }
+
+        .status {
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .detail {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .detail strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .confirm-btn,
+        .cancel-btn {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .confirm-btn {
+            background: #28a745;
+        }
+
+        .confirm-btn:hover {
+            background: #218838;
+        }
+
+        .cancel-btn {
+            background: #dc3545;
+        }
+
+        .cancel-btn:hover {
+            background: #c82333;
+        }
+
+        .message {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>👨‍⚕️ Doctor Dashboard</h1>
+
+    <p>Hospital Appointment Requests</p>
+
+</header>
+
+<div class="container">
+
+    <div class="top-bar">
+
+        <h2>Appointment Requests</h2>
+
+        <button
+            class="refresh-btn"
+            onclick="loadAppointments()"
+        >
+            🔄 Refresh
+        </button>
+
+    </div>
+
+    <div id="appointmentsContainer">
+
+        <div class="message">
+            Loading appointments...
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const API_URL =
+    "http://localhost:3000/api/appointments";
+
+// ==========================================
+// LOAD APPOINTMENTS
+// ==========================================
+
+async function loadAppointments() {
+
+    const container =
+        document.getElementById(
+            "appointmentsContainer"
+        );
+
+    container.innerHTML = `
+        <div class="message">
+            Loading appointments...
+        </div>
+    `;
+
+    try {
+
+        const response =
+            await fetch(API_URL);
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load appointments"
+            );
+        }
+
+        const appointments =
+            await response.json();
+
+        container.innerHTML = "";
+
+        if (
+            !appointments ||
+            appointments.length === 0
+        ) {
+
+            container.innerHTML = `
+                <div class="message">
+                    No appointment requests found.
+                </div>
+            `;
+
+            return;
+        }
+
+        appointments.forEach(
+            appointment => {
+
+                const status =
+                    appointment.status ||
+                    "Pending";
+
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    "appointment-card";
+
+                const statusClass =
+                    status.toLowerCase();
+
+                card.innerHTML = `
+
+                    <div class="appointment-header">
+
+                        <h3>
+                            Appointment #${appointment.id}
+                        </h3>
+
+                        <span
+                            class="status ${statusClass}"
+                        >
+                            ${status}
+                        </span>
+
+                    </div>
+
+                    <div class="details">
+
+                        <div class="detail">
+                            <strong>Patient Name</strong>
+                            ${appointment.patientName || "-"}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Age</strong>
+                            ${appointment.patientAge || "-"}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Hospital</strong>
+                            ${appointment.hospital || "-"}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Specialist</strong>
+                            ${appointment.specialist || "-"}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Date</strong>
+                            ${appointment.appointmentDate || "-"}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Time</strong>
+                            ${appointment.timeSlot || "-"}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Mobile</strong>
+                            ${appointment.mobileNumber || "-"}
+                        </div>
+
+                        <div class="detail">
+                            <strong>Email</strong>
+                            ${appointment.email || "-"}
+                        </div>
+
+                    </div>
+
+                    ${
+                        status === "Pending"
+                        ? `
+                        <div class="actions">
+
+                            <button
+                                class="confirm-btn"
+                                onclick="updateStatus(
+                                    ${appointment.id},
+                                    'Confirmed'
+                                )"
+                            >
+                                ✅ Confirm Appointment
+                            </button>
+
+                            <button
+                                class="cancel-btn"
+                                onclick="updateStatus(
+                                    ${appointment.id},
+                                    'Cancelled'
+                                )"
+                            >
+                                ❌ Cancel Appointment
+                            </button>
+
+                        </div>
+                        `
+                        : ""
+                    }
+
+                `;
+
+                container.appendChild(card);
+
+            }
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <div class="message">
+
+                ❌ Unable to load appointments.
+
+                <br><br>
+
+                Make sure the backend is running
+                on port 3000.
+
+            </div>
+        `;
+    }
+}
+
+// ==========================================
+// CONFIRM / CANCEL
+// ==========================================
+
+async function updateStatus(
+    id,
+    status
+) {
+
+    const action =
+        status === "Confirmed"
+        ? "confirm"
+        : "cancel";
+
+    const answer =
+        confirm(
+            `Are you sure you want to ${action} appointment #${id}?`
+        );
+
+    if (!answer) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/${id}/status`,
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        status: status
+                    })
+                }
+            );
+
+        const result =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                result.message ||
+                "Failed to update appointment."
+            );
+
+            return;
+        }
+
+        alert(
+            status === "Confirmed"
+            ? "Appointment confirmed. SMS sent to patient."
+            : "Appointment cancelled. SMS sent to patient."
+        );
+
+        loadAppointments();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to update appointment."
+        );
+    }
+}
+
+// ==========================================
+// INITIAL LOAD
+// ==========================================
+
+loadAppointments();
+
+</script>
+
+</body>
+
+</html>
+```
