@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
 
             const response = await fetch(
-                "http://localhost:3000/api/appointments",
+                "https://hospital-appointment-system-three-iota.vercel.app/api/appointments",
                 {
                     method: "POST",
 
@@ -199,12 +199,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (result.success) {
 
-                // Save database appointment ID
                 savedAppointmentId =
                     result.appointmentId;
 
 
-                // Save ID in browser
                 localStorage.setItem(
                     "lastAppointmentId",
                     savedAppointmentId
@@ -218,15 +216,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                // Hide appointment form
                 form.style.display = "none";
 
 
-                // Show payment section
                 paymentOptions.style.display = "block";
 
 
-                // Scroll to payment
                 paymentOptions.scrollIntoView({
                     behavior: "smooth",
                     block: "start"
@@ -271,9 +266,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         radio.addEventListener("change", function () {
 
-
-            // Hide all payment details
-
             if (cardOptions) {
                 cardOptions.style.display = "none";
             }
@@ -286,8 +278,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 upiDetails.style.display = "none";
             }
 
-
-            // Show selected payment
 
             if (this.value === "card") {
 
@@ -369,11 +359,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (proceedBtn) {
 
         proceedBtn.addEventListener("click", function () {
-
-
-            // ==================================
-            // GET PAYMENT METHOD
-            // ==================================
 
             const selectedPayment =
                 document.querySelector(
@@ -574,11 +559,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-
-                // ==================================
-                // GET PATIENT DATA
-                // ==================================
-
                 const patientName =
                     document.getElementById(
                         "patientName"
@@ -602,10 +582,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         "emailAddress"
                     ).value;
 
-
-                // ==================================
-                // GET APPOINTMENT DATA
-                // ==================================
 
                 const hospital =
                     document.getElementById(
@@ -631,10 +607,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     ).value;
 
 
-                // ==================================
-                // GET PAYMENT METHOD
-                // ==================================
-
                 const selectedPayment =
                     document.querySelector(
                         'input[name="payment"]:checked'
@@ -653,19 +625,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                // ==================================
-                // APPOINTMENT NUMBER
-                // ==================================
-
                 const appointmentNumber =
                     savedAppointmentId
                         ? "APT-" + savedAppointmentId
                         : "APT-" + Date.now();
 
-
-                // ==================================
-                // CREATE INVOICE
-                // ==================================
 
                 const invoiceHTML = `
 
@@ -997,10 +961,6 @@ Hospital Appointment Booking System
                 );
 
 
-                // ==================================
-                // SHOW STATUS BUTTON ON PAGE
-                // ==================================
-
                 showStatusButton();
 
             }
@@ -1020,7 +980,6 @@ Hospital Appointment Booking System
         }
 
 
-        // Don't create duplicate button
         if (document.getElementById("check-status-btn")) {
             return;
         }
