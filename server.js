@@ -5,7 +5,7 @@ const twilio = require("twilio");
 require("dotenv").config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ==========================================
 // MIDDLEWARE
@@ -52,7 +52,7 @@ try {
 
     console.log("Status column added.");
 } catch (error) {
-    // Column already exists
+    // Status column already exists
 }
 
 // ==========================================
@@ -87,12 +87,10 @@ function formatPhoneNumber(number) {
 
     let phone = String(number).trim();
 
-    // Indian 10 digit number
     if (/^[6-9]\d{9}$/.test(phone)) {
         phone = "+91" + phone;
     }
 
-    // 91XXXXXXXXXX
     if (/^91[6-9]\d{9}$/.test(phone)) {
         phone = "+" + phone;
     }
@@ -210,7 +208,6 @@ app.post("/api/appointments", async (req, res) => {
             email
         } = req.body;
 
-        // Validate required fields
         if (
             !patientName ||
             !patientAge ||
@@ -357,9 +354,7 @@ app.put("/api/appointments/:id/status", async (req, res) => {
                 `Date: ${appointment.appointmentDate}\n` +
                 `Time: ${appointment.timeSlot}\n` +
                 `Status: Confirmed`;
-        }
-
-        else if (status === "Cancelled") {
+        } else if (status === "Cancelled") {
             message =
                 `Hospital Appointment Cancelled\n` +
                 `Appointment ID: ${appointment.id}\n` +
@@ -368,17 +363,13 @@ app.put("/api/appointments/:id/status", async (req, res) => {
                 `Date: ${appointment.appointmentDate}\n` +
                 `Time: ${appointment.timeSlot}\n` +
                 `Status: Cancelled`;
-        }
-
-        else if (status === "Completed") {
+        } else if (status === "Completed") {
             message =
                 `Hospital Appointment Completed\n` +
                 `Appointment ID: ${appointment.id}\n` +
                 `Patient: ${appointment.patientName}\n` +
                 `Status: Completed`;
-        }
-
-        else {
+        } else {
             message =
                 `Hospital Appointment Update\n` +
                 `Appointment ID: ${appointment.id}\n` +
@@ -523,9 +514,7 @@ app.delete("/api/appointments/:id", (req, res) => {
 });
 
 // ==========================================
-// START SERVER
+// VERCEL EXPORT
 // ==========================================
 
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-});
+module.exports = app;
