@@ -1,19 +1,35 @@
 const express = require("express");
 const cors = require("cors");
-const Database = require("better-sqlite3");
-const twilio = require("twilio");
-require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// ==========================================
-// MIDDLEWARE
-// ==========================================
 
 app.use(cors());
 app.use(express.json());
 
+// ==========================================
+// HOME ROUTE
+// ==========================================
+
+app.get("/", (req, res) => {
+    res.send("Hospital Appointment Backend is running!");
+});
+
+// ==========================================
+// TEST API ROUTE
+// ==========================================
+
+app.get("/api/test", (req, res) => {
+    res.json({
+        success: true,
+        message: "Hospital Appointment API is working!"
+    });
+});
+
+// ==========================================
+// VERCEL EXPORT
+// ==========================================
+
+module.exports = app;
 // ==========================================
 // DATABASE
 // ==========================================
