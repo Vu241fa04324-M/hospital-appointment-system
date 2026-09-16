@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -8,11 +9,18 @@ app.use(express.json());
 
 
 // ==========================================
-// HOME ROUTE
+// SERVE FRONTEND FILES
+// ==========================================
+
+app.use(express.static(__dirname));
+
+
+// ==========================================
+// HOME PAGE
 // ==========================================
 
 app.get("/", (req, res) => {
-    res.send("Hospital Appointment Backend is running!");
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 
@@ -21,10 +29,12 @@ app.get("/", (req, res) => {
 // ==========================================
 
 app.get("/api/test", (req, res) => {
+
     res.json({
         success: true,
         message: "Hospital Appointment API is working!"
     });
+
 });
 
 
@@ -46,8 +56,6 @@ app.post("/api/appointments", (req, res) => {
     } = req.body;
 
 
-    // Check required details
-
     if (
         !patientName ||
         !patientAge ||
@@ -66,15 +74,11 @@ app.post("/api/appointments", (req, res) => {
     }
 
 
-    // Temporary appointment ID
-    // We will connect a permanent database later.
-
     const appointmentId =
         Date.now().toString().slice(-6);
 
 
-    console.log("New appointment received:");
-    console.log({
+    console.log("New appointment received:", {
         appointmentId,
         patientName,
         patientAge,
@@ -87,8 +91,6 @@ app.post("/api/appointments", (req, res) => {
         status: "Pending"
     });
 
-
-    // Send response to frontend
 
     res.json({
 
@@ -127,7 +129,7 @@ app.get("/api/appointments/:id", (req, res) => {
 
 
 // ==========================================
-// START SERVER LOCALLY
+// LOCAL SERVER
 // ==========================================
 
 if (require.main === module) {
