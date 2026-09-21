@@ -1,30 +1,21 @@
 # Hospital Appointment System
 
-A web-based appointment booking system for hospitals. Patients can book appointments, doctors can manage their schedules, and admins can oversee the whole system.
-
-## Features
-
-- Patient appointment booking
-- Login for patients, doctors, and admins
-- Doctor dashboard to view and manage appointments
-- Admin dashboard to manage users and appointments
-- Appointment status tracking
+A web-based hospital appointment system with pages for patients, doctors, and admins. This project is a work in progress.
 
 ## Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Node.js
-- **Database:** SQLite
+- **Backend:** Node.js, Express
 
 ## Project Structure
 
 | File | Purpose |
 |------|---------|
-| `server.js` | Backend server |
+| `server.js` | Express backend (test routes for now) |
 | `index.html` | Home page |
 | `login.html` | Login page |
-| `admin.html` | Admin dashboard |
-| `doctor.html` | Doctor dashboard |
+| `admin.html` | Admin page |
+| `doctor.html` | Doctor page |
 | `status.html` | Appointment status page |
 | `script.js` | Frontend logic |
 | `style.css` | Styling |
@@ -47,8 +38,20 @@ A web-based appointment booking system for hospitals. Patients can book appointm
    node server.js
 ```
 
-4. Open your browser and go to `http://localhost:3000`
-   (check `server.js` for the actual port if it's different).
+4. Open `http://localhost:3000` in your browser. You should see "Hospital Appointment Backend is running!"
+
+## API Routes
+
+| Route | Description |
+|-------|-------------|
+| `GET /` | Backend status message |
+| `GET /api/test` | Test route that returns JSON |
+
+## Planned Features
+
+- Appointment booking
+- Login for patients, doctors, and admins
+- Database storage for users and appointments
 
 ## Author
 
