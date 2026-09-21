@@ -33,12 +33,10 @@ body { margin: 0; font-family: Arial, sans-serif; background: #f3f6fb; color: #1
 
     <h2>Check Appointment Status</h2>
     <p>Enter your appointment ID to view the latest status.</p>
-
     <div class="row-search">
       <input type="text" id="appointmentId" placeholder="Enter appointment ID">
       <button id="checkBtn" type="button">Check Status</button>
     </div>
-
     <div id="message"></div>
     <div id="result"></div>
   </div>
@@ -63,9 +61,9 @@ function addItem(label, value) {
   b.textContent = label + ": ";
   div.appendChild(b);
   if (label === "Status") {
-
     const badge = document.createElement("span");
     badge.className = "badge";
+
     badge.textContent = value;
     div.appendChild(badge);
   } else {
@@ -74,9 +72,58 @@ function addItem(label, value) {
   result.appendChild(div);
 }
 
+function savedAppointment(id) {
+  try { return JSON.parse(localStorage.getItem("appt_" + id)); }
+  catch (e) { return null; }
+}
+
 async function checkStatus() {
   const id = idInput.value.trim();
   message.style.display = "none";
   result.style.display = "none";
 
-  if (!id) { showError("Please enter your appointment ID.");
+  if (!id) { showError("Please enter your appointment ID."); return; }
+
+  btn.disabled = true;
+  btn.textContent = "Checking...";
+
+  let data = null;
+
+  // 1. Ask the server
+  try {
+    const response = await fetch("/api/appointments/" + encodeURIComponent(id));
+    const json = await response.json();
+    if (json.success && json.patientName) data = json;
+  } catch (e) {}
+
+
+  // 2. If the server forgot it, use the copy saved in this browser
+  if (!data) data = savedAppointment(id);
+
+  btn.disabled = false;
+  btn.textContent = "Check Status";
+
+  if (!data) {
+    showError("Appointment not found. Please check your ID.");
+    return;
+  }
+
+  result.innerHTML = "";
+  addItem("Appointment ID", data.appointmentId);
+  addItem("Status", data.status);
+  addItem("Patient Name", data.patientName);
+  addItem("Hospital", data.hospital);
+  addItem("Specialist", data.specialist);
+  addItem("Date", data.appointmentDate);
+  addItem("Time Slot", data.timeSlot);
+  result.style.display = "block";
+}
+
+btn.addEventListener("click", checkStatus);
+idInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") checkStatus();
+});
+</script>
+
+</body>
+</html>
