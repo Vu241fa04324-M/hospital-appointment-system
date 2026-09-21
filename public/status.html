@@ -1,107 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Status</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appointment Status</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: #f3f6fb; color: #172a3a; }
+.navbar { background: #172a3a; color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
+.navbar h2 { margin: 0; font-size: 22px; }
+.navbar a { background: #4ecdc4; color: white; text-decoration: none; padding: 10px 16px; border-radius: 6px; }
+.container { width: 90%; max-width: 800px; margin: 40px auto; }
+.box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+.row-search { display: flex; gap: 10px; margin-top: 15px; }
+.row-search input { flex: 1; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; }
+.row-search button { padding: 12px 20px; font-size: 16px; background: #172a3a; color: white; border: none; border-radius: 6px; cursor: pointer; }
+#message { display: none; margin-top: 15px; padding: 14px; border-radius: 6px; background: #ffe9e9; color: #c0392b; }
+#result { display: none; margin-top: 20px; padding: 20px; border-radius: 8px; background: #f0faf0; border: 1px solid #cdeccd; }
+.item { padding: 8px 0; border-bottom: 1px solid #dfeedf; }
+.badge { padding: 4px 12px; border-radius: 20px; background: #fff3cd; color: #856404; font-weight: bold; }
+</style>
+</head>
+<body>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<div class="navbar">
+  <h2>🏥 Hospital Appointment</h2>
+  <a href="/">Home</a>
+</div>
 
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f3f6fb;
-            color: #172a3a;
-        }
+<div class="container">
+  <div class="box">
 
-        .navbar {
-            background: #172a3a;
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    <h2>Check Appointment Status</h2>
+    <p>Enter your appointment ID to view the latest status.</p>
 
-        .navbar h2 {
-            margin: 0;
-            font-size: 22px;
-        }
+    <div class="row-search">
+      <input type="text" id="appointmentId" placeholder="Enter appointment ID">
+      <button id="checkBtn" type="button">Check Status</button>
+    </div>
 
-        .navbar a {
-            background: #4ecdc4;
-            color: white;
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-        }
+    <div id="message"></div>
+    <div id="result"></div>
+  </div>
+</div>
 
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 40px auto;
-        }
+<script>
+const idInput = document.getElementById("appointmentId");
+const btn = document.getElementById("checkBtn");
+const message = document.getElementById("message");
+const result = document.getElementById("result");
 
-        .search-box {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
+function showError(text) {
+  result.style.display = "none";
+  message.textContent = text;
+  message.style.display = "block";
+}
 
-        .search-box h2 {
-            margin: 0 0 10px;
-            color: #172a3a;
-        }
+function addItem(label, value) {
+  const div = document.createElement("div");
+  div.className = "item";
+  const b = document.createElement("strong");
+  b.textContent = label + ": ";
+  div.appendChild(b);
+  if (label === "Status") {
 
-        .search-box p {
-            margin: 0 0 15px;
-            color: #666;
-        }
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = value;
+    div.appendChild(badge);
+  } else {
+    div.appendChild(document.createTextNode(value));
+  }
+  result.appendChild(div);
+}
 
-        .search-row {
-            display: flex;
-            gap: 10px;
-        }
+async function checkStatus() {
+  const id = idInput.value.trim();
+  message.style.display = "none";
+  result.style.display = "none";
 
-        .search-row input {
-            flex: 1;
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        .search-row button {
-            padding: 12px 20px;
-            font-size: 16px;
-            background: #172a3a;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .search-row button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        #message {
-            display: none;
-            margin-top: 15px;
-            padding: 14px;
-            border-radius: 6px;
-        }
-
-        #message.error {
-            display: block;
-            background: #ffe9e9;
-            color: #c0392b;
-        }
-
-        #result {
-            display: none;
+  if (!id) { showError("Please enter your appointment ID.");
