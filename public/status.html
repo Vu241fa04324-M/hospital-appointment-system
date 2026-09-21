@@ -3,42 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Appointment Status</title>
 
     <style>
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #333;
-            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f6fb;
+            color: #172a3a;
         }
 
-        header {
+        .navbar {
             background: #172a3a;
             color: white;
-            padding: 18px 30px;
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        header h2 {
+        .navbar h2 {
+            margin: 0;
             font-size: 22px;
         }
 
-        .home-btn {
+        .navbar a {
+            background: #4ecdc4;
             color: white;
             text-decoration: none;
-            background: #4ecdc4;
-            padding: 9px 16px;
-            border-radius: 5px;
+            padding: 10px 16px;
+            border-radius: 6px;
         }
 
         .container {
@@ -51,17 +49,16 @@
             background: white;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .search-box h2 {
-            margin-bottom: 15px;
+            margin: 0 0 10px;
             color: #172a3a;
         }
 
         .search-box p {
-            margin-bottom: 15px;
+            margin: 0 0 15px;
             color: #666;
         }
 
@@ -73,431 +70,38 @@
         .search-row input {
             flex: 1;
             padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
             font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
         }
 
         .search-row button {
             padding: 12px 20px;
-            border: none;
+            font-size: 16px;
             background: #172a3a;
             color: white;
-            border-radius: 5px;
+            border: none;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
         }
 
-        .search-row button:hover {
-            background: #4ecdc4;
-            color: #172a3a;
+        .search-row button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #message {
+            display: none;
+            margin-top: 15px;
+            padding: 14px;
+            border-radius: 6px;
+        }
+
+        #message.error {
+            display: block;
+            background: #ffe9e9;
+            color: #c0392b;
         }
 
         #result {
             display: none;
-        }
-
-        .status-card {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .status-header {
-            text-align: center;
-            padding-bottom: 25px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .status-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-
-        .status-header h2 {
-            color: #172a3a;
-            margin-bottom: 8px;
-        }
-
-        .status-text {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .pending {
-            color: #e6a700;
-        }
-
-        .confirmed {
-            color: #168a45;
-        }
-
-        .completed {
-            color: #1976d2;
-        }
-
-        .cancelled {
-            color: #d32f2f;
-        }
-
-        .details {
-            margin-top: 25px;
-        }
-
-        .details h3 {
-            color: #172a3a;
-            margin-bottom: 18px;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .detail-row span:first-child {
-            font-weight: bold;
-            color: #555;
-        }
-
-        .detail-row span:last-child {
-            text-align: right;
-        }
-
-        .message {
-            margin-top: 25px;
-            padding: 15px;
-            border-radius: 6px;
-            background: #f1f8ff;
-            text-align: center;
-        }
-
-        .error {
-            display: none;
-            background: #ffecec;
-            color: #c62828;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 600px) {
-
-            header {
-                padding: 15px;
-            }
-
-            .container {
-                width: 94%;
-            }
-
-            .search-row {
-                flex-direction: column;
-            }
-
-            .detail-row {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .detail-row span:last-child {
-                text-align: left;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-<header>
-    <h2>🏥 Hospital Appointment</h2>
-
-    <a href="index.html" class="home-btn">
-        Home
-    </a>
-</header>
-
-
-<div class="container">
-
-    <div class="search-box">
-
-        <h2>Check Appointment Status</h2>
-
-        <p>
-            Enter your appointment ID to view the latest status.
-        </p>
-
-        <div class="search-row">
-
-            <input
-                type="number"
-                id="appointmentId"
-                placeholder="Enter Appointment ID"
-                min="1"
-            >
-
-            <button onclick="checkStatus()">
-                Check Status
-            </button>
-
-        </div>
-
-        <div class="error" id="errorMessage"></div>
-
-    </div>
-
-
-    <div id="result">
-
-        <div class="status-card">
-
-            <div class="status-header">
-
-                <div class="status-icon" id="statusIcon">
-                    ⏳
-                </div>
-
-                <h2 id="statusTitle">
-                    Appointment Status
-                </h2>
-
-                <p
-                    class="status-text"
-                    id="statusText">
-                    Pending
-                </p>
-
-            </div>
-
-
-            <div class="details">
-
-                <h3>Appointment Details</h3>
-
-                <div class="detail-row">
-                    <span>Appointment ID</span>
-                    <span id="id"></span>
-                </div>
-
-                <div class="detail-row">
-                    <span>Patient Name</span>
-                    <span id="patientName"></span>
-                </div>
-
-                <div class="detail-row">
-                    <span>Age</span>
-                    <span id="patientAge"></span>
-                </div>
-
-                <div class="detail-row">
-                    <span>Hospital</span>
-                    <span id="hospital"></span>
-                </div>
-
-                <div class="detail-row">
-                    <span>Specialist</span>
-                    <span id="specialist"></span>
-                </div>
-
-                <div class="detail-row">
-                    <span>Appointment Date</span>
-                    <span id="appointmentDate"></span>
-                </div>
-
-                <div class="detail-row">
-                    <span>Time Slot</span>
-                    <span id="timeSlot"></span>
-                </div>
-
-            </div>
-
-
-            <div class="message" id="statusMessage">
-                Your appointment is waiting for confirmation.
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<script>
-
-    async function checkStatus() {
-
-        const id = document.getElementById("appointmentId").value;
-        const errorMessage = document.getElementById("errorMessage");
-        const result = document.getElementById("result");
-
-        errorMessage.style.display = "none";
-        result.style.display = "none";
-
-        if (!id) {
-            errorMessage.textContent =
-                "Please enter your appointment ID.";
-
-            errorMessage.style.display = "block";
-
-            return;
-        }
-
-        try {
-
-            const response = await fetch(
-                "http://localhost:3000/api/appointments/" + id
-            );
-
-            const data = await response.json();
-
-            if (!response.ok || !data.success) {
-
-                errorMessage.textContent =
-                    data.message || "Appointment not found.";
-
-                errorMessage.style.display = "block";
-
-                return;
-            }
-
-            const appointment = data.appointment;
-
-            document.getElementById("id").textContent =
-                appointment.id;
-
-            document.getElementById("patientName").textContent =
-                appointment.patientName;
-
-            document.getElementById("patientAge").textContent =
-                appointment.patientAge;
-
-            document.getElementById("hospital").textContent =
-                appointment.hospital;
-
-            document.getElementById("specialist").textContent =
-                appointment.specialist;
-
-            document.getElementById("appointmentDate").textContent =
-                appointment.appointmentDate;
-
-            document.getElementById("timeSlot").textContent =
-                appointment.timeSlot;
-
-
-            let status =
-                appointment.status || "Pending";
-
-            status = status.trim();
-
-            const statusText =
-                document.getElementById("statusText");
-
-            const statusTitle =
-                document.getElementById("statusTitle");
-
-            const statusIcon =
-                document.getElementById("statusIcon");
-
-            const statusMessage =
-                document.getElementById("statusMessage");
-
-
-            statusText.className = "status-text";
-
-
-            if (status === "Confirmed") {
-
-                statusText.textContent = "Confirmed";
-                statusText.classList.add("confirmed");
-
-                statusIcon.textContent = "✅";
-
-                statusTitle.textContent =
-                    "Appointment Confirmed";
-
-                statusMessage.textContent =
-                    "Your appointment has been confirmed by the doctor.";
-
-            }
-
-            else if (status === "Completed") {
-
-                statusText.textContent = "Completed";
-                statusText.classList.add("completed");
-
-                statusIcon.textContent = "✔️";
-
-                statusTitle.textContent =
-                    "Appointment Completed";
-
-                statusMessage.textContent =
-                    "Your appointment has been completed.";
-
-            }
-
-            else if (status === "Cancelled") {
-
-                statusText.textContent = "Cancelled";
-                statusText.classList.add("cancelled");
-
-                statusIcon.textContent = "❌";
-
-                statusTitle.textContent =
-                    "Appointment Cancelled";
-
-                statusMessage.textContent =
-                    "Your appointment has been cancelled.";
-
-            }
-
-            else {
-
-                statusText.textContent = "Pending";
-                statusText.classList.add("pending");
-
-                statusIcon.textContent = "⏳";
-
-                statusTitle.textContent =
-                    "Appointment Pending";
-
-                statusMessage.textContent =
-                    "Your appointment is waiting for confirmation.";
-
-            }
-
-
-            result.style.display = "block";
-
-        }
-
-        catch (error) {
-
-            console.error(error);
-
-            errorMessage.textContent =
-                "Unable to connect to the backend. Please make sure the server is running.";
-
-            errorMessage.style.display = "block";
-        }
-    }
-
-
-    document
-        .getElementById("appointmentId")
-        .addEventListener("keypress", function(event) {
-
-            if (event.key === "Enter") {
-                checkStatus();
-            }
-
-        });
-
-</script>
-
-</body>
-</html>
