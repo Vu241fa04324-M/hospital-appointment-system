@@ -6,7 +6,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Appointments are stored here while the server is running
 const appointments = {};
@@ -20,7 +20,7 @@ function makeId() {
 }
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.get("/api/test", (req, res) => {
@@ -30,6 +30,7 @@ app.get("/api/test", (req, res) => {
 app.post("/api/appointments", (req, res) => {
     const {
         patientName, patientAge, hospital, specialist,
+
         appointmentDate, timeSlot, mobileNumber, email
     } = req.body;
 
@@ -62,6 +63,7 @@ app.get("/api/appointments/:id", (req, res) => {
 
     if (!appointment) {
         return res.status(404).json({
+
             success: false,
             message: "Appointment not found."
         });
