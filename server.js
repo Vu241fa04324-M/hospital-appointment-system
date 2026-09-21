@@ -30,7 +30,6 @@ app.get("/api/test", (req, res) => {
 app.post("/api/appointments", (req, res) => {
     const {
         patientName, patientAge, hospital, specialist,
-
         appointmentDate, timeSlot, mobileNumber, email
     } = req.body;
 
@@ -63,7 +62,6 @@ app.get("/api/appointments/:id", (req, res) => {
 
     if (!appointment) {
         return res.status(404).json({
-
             success: false,
             message: "Appointment not found."
         });
